@@ -1,11 +1,5 @@
 TASK model
 
-|     |     |     | 
-| --- | --- | --- | 
-|     |     |     | 
-|     |     |     | 
-|     |     |     | 
-
 | id |  Task |  Detaile |　Deadline |
 | ---- |----| ---- | ----|
 |  1  |  Cleaning |  Kitchin  |  1week  |
