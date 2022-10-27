@@ -1,25 +1,25 @@
-# README
+TASK model
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| id |  Task |  Detaile |　Deadline |
+| ---- |----| ---- | ----|
+|  1  |  Cleaning |  Kitchin  |  1week  |
+|  2  |  Washing  |  Cloth  |  tomorrow |
 
-Things you may want to cover:
+LABEL model 内容未定
 
-* Ruby version
+|  id  | Taskname  |  Detaile |　Deadline |
+| ---- | ----| ----| ---- |
+|  1  |  Cleaning |  Kitchin  |  1week  |
+|  2  |  Washing  |  Cloth  |  tomorrow |
 
-* System dependencies
+ User model
 
-* Configuration
+|  id  |  Name |  Email |　Password |
+| ---- | ---- | ---- | ---- |
+|  1  |  Tanaka |  tanaka＠sample.com  |  tanaka  |
 
-* Database creation
+Type
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
--develop
+|  Task |  Detaile |　Deadline | name |  email | password | label
+| ---- |----| ---- | ----| ----|----| ---- |
+| string | text | date | string | string | string | string |
