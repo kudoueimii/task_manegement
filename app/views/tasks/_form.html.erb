@@ -7,5 +7,9 @@
     <%= form.label :detail %>
     <%= form.text_field :detail %>
   </div>
+  <div class="task_detail">
+    <%= form.label :deadline%>
+    <%= form.datetime_select :deadline, {include_blank: true, discard_year: true, use_month_numbers: true}%>
+  </div>
   <%= form.submit %>
 <% end %>
