@@ -5,6 +5,7 @@
   <tr>
     <th>タスク名</th>
     <th>詳細</th>
+    <th>終了期限</th>
   </tr>
 
 
@@ -12,6 +13,7 @@
   <tr>
     <td class="task_all"><%= task.title %></td>
     <td><%= task.detail %></td>
+    <td><%= task.deadline_at %></td>
     <td><%= link_to 'show', task_path(task.id) %></td>
     <td><%= link_to '編集', edit_task_path(task.id) %></td>
     <td><%= link_to '削除', task_path(task.id), method: :delete %></td>
@@ -21,4 +23,4 @@
 </table>
 
 <%= link_to '新規作成', new_task_path%>
-<%# <input type="submit" Value="ソート"> %>
+<%= link_to "終了期限でソートする", tasks_path(sort_deadline: "true") %>

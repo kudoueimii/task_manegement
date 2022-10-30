@@ -19,6 +19,10 @@
     <%= form.label :detail %>
     <%= form.text_field :detail %>
   </div>
+  <div class="task_detail">
+    <%= form.label :deadline_at %>
+    <%= form.datetime_select :deadline_at, {include_blank: true, use_month_numbers: true}%>
+  </div>
   <%= form.submit %>
 <% end %>
 
