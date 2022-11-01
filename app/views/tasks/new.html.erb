@@ -23,6 +23,10 @@
     <%= form.label :deadline_at %>
     <%= form.datetime_select :deadline_at, {include_blank: true, use_month_numbers: true}%>
   </div>
+  <div class="task_status">
+    <%= form.label :status %>
+    <%= form.select :status, Task.statuses.keys %>
+  </div>
   <%= form.submit %>
 <% end %>
 

@@ -4,6 +4,7 @@ class TasksController < ApplicationController
       @tasks = Task.deadline
     else
       @tasks = Task.all
+      @tasks = @tasks.where('title LIKE ?', "%#{params[:search]}%") if params[:search].present?
     end
   end
 
@@ -43,10 +44,14 @@ class TasksController < ApplicationController
     redirect_to tasks_path, notice: "削除しました。"
   end
 
+  def search
+    task.where('title LIKE(?)', "%#{params[:keyword]}%")
+  end
+
   private
 
   def task_params
-    params.require(:task).permit(:title, :detail, :deadline_at)
+    params.require(:task).permit(:title, :detail, :deadline_at, :status)
   end
 
 
