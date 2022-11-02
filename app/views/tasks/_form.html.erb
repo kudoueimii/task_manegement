@@ -1,4 +1,16 @@
-<%= form_with(model: @task, local: true) do |form| %>
+<%= form_with(model: @task, scope: :task, local: true) do |form| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @task.errors.count %>件のエラーがあります。</h2>
+      <ul>
+
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="task_title">
     <%= form.label :title %>
     <%= form.text_field :title %>
@@ -8,13 +20,12 @@
     <%= form.text_field :detail %>
   </div>
   <div class="task_detail">
-    <%= form.label :deadline%>
-    <%= form.datetime_select :deadline, {include_blank: true, discard_year: true, use_month_numbers: true}%>
+    <%= form.label :deadline_at %>
+    <%= form.datetime_select :deadline_at, {include_blank: true, use_month_numbers: true}%>
   </div>
-   <div class="task_status">
+  <div class="task_status">
     <%= form.label :status %>
-    <%= form.select :statusTask.statuses.keys %>
+    <%= form.select :status, Task.statuses.keys %>
   </div>
-  
   <%= form.submit %>
 <% end %>

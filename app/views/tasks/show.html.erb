@@ -1,5 +1,4 @@
 <h1>詳細画面</h1>
-<p>title: <%= @task.title %></p>
-<p>detail: <%= @task.detail %></p>
+<%= render 'form', task: @task %>
 
 <%= link_to 'タスク一覧画面に戻る', tasks_path %>

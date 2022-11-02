@@ -1,10 +1,17 @@
 class TasksController < ApplicationController
   def index
+    @tasks = Task.all
     if params[:sort_deadline]
       @tasks = Task.deadline
-    else
-      @tasks = Task.all
-      @tasks = @tasks.where('title LIKE ?', "%#{params[:search]}%") if params[:search].present?
+    end
+    if params[:task].present?
+      if params[:task].present? && params[:task][:status].present?
+        @tasks = Task.where('title LIKE ? AND status = ?', "%#{params[:task][:title]}%", Task.statuses[params[:task][:status]])
+      elsif params[:task].present?
+        @tasks = Task.where('title LIKE ?', "%#{params[:task][:title]}%")
+      elsif params[:status].present?
+        @tasks = Task.where(status: params[:task][:status])
+      end
     end
   end
 
@@ -44,9 +51,9 @@ class TasksController < ApplicationController
     redirect_to tasks_path, notice: "削除しました。"
   end
 
-  def search
-    task.where('title LIKE(?)', "%#{params[:keyword]}%")
-  end
+  # def search
+  #   task.where('title LIKE(?)', "%#{params[:keyword]}%")
+  # end
 
   private
 
