@@ -19,13 +19,17 @@
     <%= form.label :detail %>
     <%= form.text_field :detail %>
   </div>
-  <div class="task_detail">
+  <div class="task_deadline_at">
     <%= form.label :deadline_at %>
-    <%= form.datetime_select :deadline_at, {include_blank: true, use_month_numbers: true}%>
+    <%= form.datetime_select :deadline_at, {use_month_numbers: true}%>
   </div>
   <div class="task_status">
     <%= form.label :status %>
     <%= form.select :status, Task.statuses.keys %>
+  </div>
+  <div class="task_priority">
+    <%= form.label :priority %>
+    <%= form.select :priority, Task.priorities.keys %>
   </div>
   <%= form.submit %>
 <% end %>

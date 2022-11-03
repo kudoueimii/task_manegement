@@ -4,8 +4,10 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
         visit new_task_path
-        task = FactoryBot.create(:task, title: 'タイトル', detail: '詳細')
+
+        task = FactoryBot.create(:task, title: 'タイトル', ')
         visit tasks_path
+
         expect(page).to have_content 'タイトル'
       end
     end
@@ -20,14 +22,26 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タスクが作成日時の降順に並んでいる場合'do
       it '新しいタスクが一番上に表示される'do
-      task = FactoryBot.create(:task, title: 'task2')
-      task = FactoryBot.create(:task, title: 'task1')
+        task = FactoryBot.create(:task, title: 'task2')
+        task = FactoryBot.create(:task, title: 'task1')
         visit tasks_path
-        sleep(2)
+
         task_list = all('.task_all')
-        link_to "終了期限でソートする"
-        expect(task_list[0]).to have_content 'task1'
-        expect(task_list[1]).to have_content 'task2'
+
+        expect(task_list[0]).to have_content 'task2'
+        expect(task_list[1]).to have_content 'task1'
+      end
+    end
+    context' 終了期限でソートする場合'do
+      it '終了期限を降順で表示される'do
+        task = FactoryBot.create(:task, title: 'sort2', deadline_at: '2022-10-2T19:27:00.000Z')
+        task = FactoryBot.create(:task, title: 'sort1', deadline_at: '2022-11-2T19:27:00.000Z')
+        visit tasks_path
+
+        click_on '終了期限でソートする'
+        task_list = all('.task_all')
+
+        expect(task_list[0]).to have_content 'sort1'
       end
     end
   end

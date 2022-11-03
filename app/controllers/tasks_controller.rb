@@ -4,13 +4,18 @@ class TasksController < ApplicationController
     if params[:sort_deadline]
       @tasks = Task.deadline
     end
+    if params[:sort_priority]
+      @tasks = Task.order(priority: :asc)
+    end
     if params[:task].present?
+      title = params[:task][:title]
+      status = params[:task][:status]
       if params[:task].present? && params[:task][:status].present?
-        @tasks = Task.where('title LIKE ? AND status = ?', "%#{params[:task][:title]}%", Task.statuses[params[:task][:status]])
+        @tasks = Task.search_title(title).search_status(status)
       elsif params[:task].present?
-        @tasks = Task.where('title LIKE ?', "%#{params[:task][:title]}%")
+        @tasks = Task.search_title(title)
       elsif params[:status].present?
-        @tasks = Task.where(status: params[:task][:status])
+        @tasks = Task.search_status(status)
       end
     end
   end
@@ -58,7 +63,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :detail, :deadline_at, :status)
+    params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority)
   end
 
 
