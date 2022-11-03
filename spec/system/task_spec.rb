@@ -1,14 +1,53 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
-    context 'タスクを新規作成した場合' do
-      it '作成したタスクが表示される' do
+    context 'タスクとステータスを新規作成した場合' do
+      it '作成したタスクとステータスが表示される' do
         visit new_task_path
 
-        task = FactoryBot.create(:task, title: 'タイトル', ')
+        task = FactoryBot.create(:task, title: 'タイトル', status: 'waiting')
         visit tasks_path
 
         expect(page).to have_content 'タイトル'
+        expect(page).to have_content 'waiting'
+      end
+    end
+  end
+
+  describe '検索機能' do
+    before do
+      FactoryBot.create(:task, title: "task")
+      FactoryBot.create(:task, title: "task2")
+    end
+
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        visit tasks_path
+        fill_in 'task'
+        click_on 'Search'
+        expect(page).to have_content 'task'
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        visit tasks_path
+
+        select 'waiting', from: 'task_status'
+        click_on 'Search'
+
+        expect(page).to have_selector 'td', text: 'waiting'
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        visit tasks_path
+
+        fill_in "task_title", with: 'task'
+        select 'waiting', from: 'task_status'
+        click_on 'Search'
+
+        expect(page).to have_content 'task'
+        expect(page).to have_selector 'td', text: 'waiting'
       end
     end
   end
@@ -37,7 +76,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         task = FactoryBot.create(:task, title: 'sort2', deadline_at: '2022-10-2T19:27:00.000Z')
         task = FactoryBot.create(:task, title: 'sort1', deadline_at: '2022-11-2T19:27:00.000Z')
         visit tasks_path
-
+        sleep(2)
+        
         click_on '終了期限でソートする'
         task_list = all('.task_all')
 
@@ -55,4 +95,5 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
+
 end
