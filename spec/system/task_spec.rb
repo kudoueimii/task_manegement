@@ -23,7 +23,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do
         visit tasks_path
-        fill_in 'task'
+        fill_in 'task_title', with: 'task'
         click_on 'Search'
         expect(page).to have_content 'task'
       end
@@ -76,7 +76,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         task = FactoryBot.create(:task, title: 'sort2', deadline_at: '2022-10-2T19:27:00.000Z')
         task = FactoryBot.create(:task, title: 'sort1', deadline_at: '2022-11-2T19:27:00.000Z')
         visit tasks_path
-        sleep(2)
+        # sleep(5)
         
         click_on '終了期限でソートする'
         task_list = all('.task_all')

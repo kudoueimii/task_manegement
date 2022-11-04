@@ -18,6 +18,7 @@ class TasksController < ApplicationController
         @tasks = Task.search_status(status)
       end
     end
+    @tasks = @tasks.page(params[:page]).per(5)
   end
 
   def new
@@ -63,7 +64,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority)
+    params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority, :page)
   end
 
 
