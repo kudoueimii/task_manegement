@@ -6,5 +6,4 @@ class RenameFromNameToStatusOnLabels < ActiveRecord::Migration[6.1]
   def down
     remove_column :labels, :name, :status
   end
-  end
 end
