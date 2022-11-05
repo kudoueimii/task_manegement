@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     if params[:sort_deadline]
       @tasks = Task.deadline
     end
