@@ -1,6 +1,16 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
+    before do
+      FactoryBot.create(:user, name: 'tanaka', 
+                               email: 'tanaka@sample.com', 
+                               password: 'tanaka'
+                               password_confirmation: 'tanaka')
+      visit new_session_path
+      fill_in 'email', with: 'tanaka@sample.com'
+      fill_in 'password', with: 'tanaka'
+      click_on 'Log in'
+    end
     context 'タスクとステータスを新規作成した場合' do
       it '作成したタスクとステータスが表示される' do
         visit new_task_path

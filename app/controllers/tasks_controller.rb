@@ -26,7 +26,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to tasks_path, notice: "作成されました。"
     else
@@ -56,10 +56,6 @@ class TasksController < ApplicationController
     @task.destroy
     redirect_to tasks_path, notice: "削除しました。"
   end
-
-  # def search
-  #   task.where('title LIKE(?)', "%#{params[:keyword]}%")
-  # end
 
   private
 
