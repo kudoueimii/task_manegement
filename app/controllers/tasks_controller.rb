@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.all
+    # byebug
     if params[:sort_deadline]
       @tasks = Task.deadline
     end
@@ -60,7 +61,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority, :page)
+    params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority, :page, :admin)
   end
 
 

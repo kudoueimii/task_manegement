@@ -5,7 +5,7 @@
 
 <%# 管理者限定でadmin/user/indexを表示させる %>
 <% if @user.admin? %>
-  <%= link_to 'Taskユーザー一覧',admin_users_path%>
+  <%= link_to '管理：Taskユーザー一覧',admin_users_path%>
 <%  end %>
 
 <p><%= link_to "タスク一覧画面へ戻る", tasks_path %></p>

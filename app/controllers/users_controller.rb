@@ -8,8 +8,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user_id
-      # flash[:notice] ="ログインしました"
-      redirect_to user_path(@user.id)
+      flash[:notice] ="ログインしました"
+      redirect_to user_path(@user.id),notice: "登録しました。"
     else
       render :new
     end

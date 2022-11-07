@@ -44,7 +44,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      redirect_to admin_users_path, notice: "{@user.name}を削除しました"
+      redirect_to admin_users_path, notice: "削除しました"
     else
       redirect_to admin_users_path, notice: "管理者がいなくなるので削除できません"
     end
@@ -55,9 +55,11 @@ class Admin::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
   end
+
   def set_user
     @user = User.find(params[:id])
   end
+
   def admin_check
     unless current_user && current_user.admin?
       redirect_to root_path, notice: "管理者以外はアクセス不可です"
