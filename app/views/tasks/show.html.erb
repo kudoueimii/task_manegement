@@ -1,5 +1,26 @@
 <h1>詳細画面</h1>
-<p>title: <%= @task.title %></p>
-<p>detail: <%= @task.detail %></p>
+
+<%= form_with(model: @task, scope: :task, local: true) do |form| %>
+  <div class="task_title">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+  <div class="task_detail">
+    <%= form.label :detail %>
+    <%= form.text_field :detail %>
+  </div>
+  <div class="task_deadline_at">
+    <%= form.label :deadline_at %>
+    <%= form.datetime_select :deadline_at, {use_month_numbers: true}%>
+  </div>
+  <div class="task_status">
+    <%= form.label :status %>
+    <%= form.select :status, Task.statuses.keys %>
+  </div>
+  <div class="task_priority">
+    <%= form.label :priority %>
+    <%= form.select :priority, Task.priorities.keys %>
+  </div>
+<% end%>
 
 <%= link_to 'タスク一覧画面に戻る', tasks_path %>

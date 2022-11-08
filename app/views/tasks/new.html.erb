@@ -1,26 +1,7 @@
-<%= form_with(model: @task, local: true) do |form| %>
-  <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= @task.errors.count %>件のエラーがあります。</h2>
-      <ul>
+<p><%= notice %></p>
+<h1>タスク一覧</h1>
 
-      <% @task.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="task_title">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-  <div class="task_detail">
-    <%= form.label :detail %>
-    <%= form.text_field :detail %>
-  </div>
-  <%= form.submit %>
-<% end %>
+<%= render 'form', task: @task %>
 
 
 <%= link_to 'タスク一覧画面に戻る', tasks_path %>
