@@ -10,7 +10,7 @@ class Admin::UsersController < ApplicationController
 
 
   def show
-    @tasks = @user.tasks.all
+    @tasks = User.find(params[:id])
     @tasks = @tasks.page(params[:page]).per(5)
   end
 
@@ -21,6 +21,7 @@ class Admin::UsersController < ApplicationController
 
 
   def edit
+    @user = User.find(params[:id])
   end
 
 
@@ -46,8 +47,6 @@ class Admin::UsersController < ApplicationController
   def destroy
     if @user.destroy
       redirect_to admin_users_path, notice: "削除しました"
-    else
-      redirect_to admin_users_path, notice: "管理者がいなくなるので削除できません"
     end
   end
 

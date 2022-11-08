@@ -3,6 +3,11 @@ class SessionsController < ApplicationController
   # skip_before_action :not_login_user, only:[:new, :create, :destroy]
   
   def new
+    unless logged_in?
+      @user = User.new
+    else
+      redirect_to root_path, notice: 'すでにログインしています。'
+    end
   end
     
   def create

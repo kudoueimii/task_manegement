@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :check_user, only: %i[show edit update destroy]
 
   def index
-    @tasks = current_user.tasks.all
+    @tasks = current_user.tasks.all.includes(:user)
     if params[:sort_deadline]
       @tasks = current_user.tasks.deadline
     end
