@@ -1,9 +1,9 @@
 class Task < ApplicationRecord
   validates :title, presence: true
   validates :detail, presence: true
-  # validates :deadline_at, presence: true
-  # has_many :task_labels
+  
   belongs_to :user
+  
   scope :deadline, -> {order(deadline_at: :desc)}
   scope :search_title, ->(title){where("title LIKE ?", "%#{title}%")}
   scope :search_status, ->(status){where(status: status)}

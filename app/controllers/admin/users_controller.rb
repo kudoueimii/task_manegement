@@ -1,7 +1,8 @@
 class Admin::UsersController < ApplicationController
   before_action :admin_check
   before_action :set_user, only: %i[ show edit update destroy]
-
+  skip_before_action :login_required, only:[:new, :create]
+  before_action :not_login_user, only:[:show]
 
   def index
     @users = User.select(:id, :name, :email, :admin).order("created_at").page(params[:page]).per(5)
@@ -63,6 +64,13 @@ class Admin::UsersController < ApplicationController
   def admin_check
     unless current_user && current_user.admin?
       redirect_to root_path, notice: "管理者以外はアクセス不可です"
+    end
+  end
+
+  def not_login_user
+    if logged_in?
+      flash[:notice] = "ログインしています"
+      redirect_to tasks_path
     end
   end
 end

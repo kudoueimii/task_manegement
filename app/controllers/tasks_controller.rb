@@ -1,22 +1,24 @@
 class TasksController < ApplicationController
+  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :check_user, only: %i[show edit update destroy]
+
   def index
     @tasks = current_user.tasks.all
-    # byebug
     if params[:sort_deadline]
-      @tasks = Task.deadline
+      @tasks = current_user.tasks.deadline
     end
     if params[:sort_priority]
-      @tasks = Task.order(priority: :asc)
+      @tasks = current_user.tasks.order(priority: :asc)
     end
     if params[:task].present?
       title = params[:task][:title]
       status = params[:task][:status]
       if params[:task].present? && params[:task][:status].present?
-        @tasks = Task.search_title(title).search_status(status)
+        @tasks = current_user.tasks.search_title(title).search_status(status)
       elsif params[:task].present?
-        @tasks = Task.search_title(title)
+        @tasks = current_user.tasks.search_title(title)
       elsif params[:status].present?
-        @tasks = Task.search_status(status)
+        @tasks = current_user.tasks.search_status(status)
       end
     end
     @tasks = @tasks.page(params[:page]).per(5)
@@ -64,5 +66,14 @@ class TasksController < ApplicationController
     params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority, :page, :admin)
   end
 
+  def check_user
+    @task = Task.find(params[:id])
+    unless current_user.id == @task.user_id
+      redirect_to tasks_path, notice: 'アクセスはできません'
+    end
+  end
 
+  def set_task
+    @task = Task.find(params[:id])
+  end
 end

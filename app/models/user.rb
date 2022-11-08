@@ -9,14 +9,19 @@ class User < ApplicationRecord
   
   has_many :tasks, dependent: :destroy
   before_destroy :destroy_action
-  before_update :update_action
+  before_destroy :update_action
 
   private
-  
+
   def destroy_action
-    if User.where(admin:true).count == 1 && self.admin
+    if User.where(admin:true).count == 1 && self.admin == true
       throw :abort
     end
   end
   
+  def update_action
+    if User.where(admin: true).count == 1 && self.admin == false
+      throw(:abort) 
+    end
+  end
 end

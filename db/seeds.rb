@@ -6,8 +6,8 @@ User.create!(
   admin: false)
 
 User.create!(
-  name: 'baramy1',
-  email: 'baramy1@sample.com',
-  password: 'baramy1',
-  password_confirmation: "baramy1",
+  name: 'baramy',
+  email: 'baramy@sample.com',
+  password: 'baramy',
+  password_confirmation: "baramy",
   admin: true)
