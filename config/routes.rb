@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   end
 
   resources :tasks
-  root 'tasks#index'
+  root to: 'tasks#index'
   
   resources :sessions, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create, :show] 
