@@ -91,10 +91,11 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         click_on 'Log in'
         click_on '管理:Taskユーザー一覧'
         click_on '新規ユーザー登録'          
-        fill_in 'name', with: 'newuser2'
-        fill_in 'email', with: 'newuser2@sample.com'
-        fill_in 'password', with: 'newuser2'
-        fill_in 'password_confirmation', with: 'newuser2'
+        fill_in 'user[name]', with: 'newuser2'
+        fill_in 'user[email]', with: 'newuser2@sample.com'
+        fill_in 'user[password]', with: 'newuser2'
+        fill_in 'user[password_confirmation]', with: 'newuser2'
+        
         click_on '登録'                  
         expect(page).to have_content 'ユーザーを登録しました'
       end
@@ -107,7 +108,7 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         click_on 'Log in'
         click_on '管理:Taskユーザー一覧'
         click_on "Show", match: :first
-        expect(page).to have_content 'プロフィール情報'
+        expect(page).to have_content 'タスク一覧'
       end
     end
 
@@ -118,11 +119,11 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         click_on 'Log in'
         click_on '管理:Taskユーザー一覧'
         click_on 'Edit', match: :first
-        fill_in 'name', with: 'newuser2'
-        fill_in 'email', with: 'editdone@sample.com'
-        fill_in 'password', with: 'newuser2'
-        fill_in 'password_confirmation', with: 'newuser2'
-        click_on '登録'
+        fill_in 'user[name]', with: 'newuser2'
+        fill_in 'user[email]', with: 'editdone@sample.com'
+        fill_in 'user[password]', with: 'newuser2'
+        fill_in 'user[password_confirmation]', with: 'newuser2'
+        click_on '更新'
         expect(page).to have_content 'editdone@sample.com'
       end
     end

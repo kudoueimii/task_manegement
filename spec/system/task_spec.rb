@@ -30,7 +30,6 @@ RSpec.describe 'タスク管理機能', type: :system do
     describe '一覧表示機能' do
       context '一覧画面に遷移した場合' do
         it '作成済みのタスク一覧が表示される' do
-          FactoryBot.create(:task, user: user)
           visit tasks_path
           sleep(1)
 
@@ -70,7 +69,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     describe '詳細表示機能' do
       context '任意のタスク詳細画面に遷移した場合' do
         it '該当タスクの内容が表示される' do
-          @task = FactoryBot.create(:task, title: 'タイトル', detail: '詳細')
+          @task = FactoryBot.create(:task, title: 'タイトル', detail: '詳細', user: user)
           visit task_path(@task.id)
           expect(page).to have_content '詳細'
         end
@@ -78,7 +77,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
 
     describe '検索機能' do
-      FactoryBot.create(:task, title: 'test_title', status:'waiting')
+      # FactoryBot.create(:task, title: 'test_title', status:'waiting', user: user)
       before do
         visit new_session_path
         fill_in 'Email',	with: "newuser1@sample.com"
@@ -87,7 +86,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
       context 'タイトルであいまい検索をした場合' do
         it "検索キーワードを含むタスクで絞り込まれる" do
-          FactoryBot.create(:task, title: 'test_title', status:'waiting')
+          FactoryBot.create(:task, title: 'test_title', status:'waiting', user: user)
           visit tasks_path
           fill_in 'task[title]', with: 'test_title'
           click_on "Search"
@@ -96,7 +95,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
       context 'ステータス検索をした場合' do
         it "ステータスに完全一致するタスクが絞り込まれる" do
-          FactoryBot.create(:task, title: 'test_title', status:'waiting')
+          FactoryBot.create(:task, title: 'test_title', status:'waiting', user: user)
           visit tasks_path
 
           select 'waiting', from: 'task[status]'
