@@ -1,8 +1,8 @@
 class Admin::UsersController < ApplicationController
-  before_action :admin_check
+  before_action :admin_check, only: [:destroy, :edit]
   before_action :set_user, only: %i[ show edit update destroy]
   skip_before_action :login_required, only:[:new, :create]
-  # skip_before_action :not_login_user, only:[:show, :show, :edit, :update, :destroy]
+
 
   def index
     @users = User.select(:id, :name, :email, :admin).order("created_at").page(params[:page]).per(5)
@@ -10,8 +10,7 @@ class Admin::UsersController < ApplicationController
 
 
   def show
-    @tasks = User.find(params[:id])
-    # @tasks = @tasks.page(params[:page]).per(5)
+    @user = User.find(params[:id])
   end
 
 

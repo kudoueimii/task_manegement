@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   
   def new
     unless logged_in?
-      @user = User.new
+      user = User.new
     else
       redirect_to tasks_path, notice: 'すでにログインしています。'
     end
