@@ -5,7 +5,7 @@
 
   <h2>Taskユーザー一覧</h2>
 
-  <table>
+<table>
   <tr>
     <th>ユーザー名</th>
     <th>タスク名</th>
@@ -15,7 +15,7 @@
      <th>優先順位</th>
   </tr>
 
- <% @user.tasks.each do |task| %>
+  <% @user.tasks.each do |task| %>
   <tr>
     <td><%= task.user.name %></td>
     <td class="task_all"><%= task.title %></td>
@@ -24,7 +24,8 @@
     <td><%= task.status%></td>
     <td><%= task.priority%></td>>
   </tr>
-<% end %>
+  <% end %>
+</table>
 
 <% if @user.admin? %>
   <%= link_to '管理:Taskユーザー一覧',admin_users_path%>

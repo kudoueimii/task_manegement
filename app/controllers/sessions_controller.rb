@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     unless logged_in?
       @user = User.new
     else
-      redirect_to root_path, notice: 'すでにログインしています。'
+      redirect_to tasks_path, notice: 'すでにログインしています。'
     end
   end
     
