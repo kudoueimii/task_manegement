@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :admin_check, only: [:destroy, :edit]
-  before_action :set_user, only: %i[ show edit update destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :login_required, only:[:new, :create]
 
 
@@ -10,7 +10,6 @@ class Admin::UsersController < ApplicationController
 
 
   def show
-    @user = User.find(params[:id])
   end
 
 
@@ -20,7 +19,6 @@ class Admin::UsersController < ApplicationController
 
 
   def edit
-    @user = User.find(params[:id])
   end
 
 
@@ -44,8 +42,6 @@ class Admin::UsersController < ApplicationController
 
 
   def destroy
-    @user = User.find(params[:id])
-    @user.tasks.destroy
     @user.destroy
     redirect_to admin_users_path, notice: "削除しました"
   end
@@ -62,7 +58,7 @@ class Admin::UsersController < ApplicationController
 
   def admin_check
     unless current_user && current_user.admin?
-      redirect_to root_path, notice: "管理者以外はアクセス不可です"
+      redirect_to tasks_path, notice: "管理者以外はアクセス不可です"
     end
   end
 end

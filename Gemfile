@@ -52,3 +52,4 @@ gem 'pry-byebug'
 gem 'kaminari'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
+gem "factory_bot_rails"

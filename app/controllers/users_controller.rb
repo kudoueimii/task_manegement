@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create, :edit, :update]
-  
-  # skip_before_action :login_required, only:[:new, :create]
- before_action :not_login_user, only:[:destroy, :new, :create, :edit, :update]
-  # skip_before_action :prohibit_access_to_other_users, only:[:new, :create]
-  # skip_before_action :prohibit_access_except_admin, only:[:new, :create, :show]
+  # before_action :not_login_user, only:[:destroy, :new, :create, :edit, :update]
 
   
   def new
