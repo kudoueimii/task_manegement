@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
-  # skip_before_action :not_login_user, only:[:new, :create, :destroy]
+  # prepend_before_action :already_logged_in?, only:[:new, :create]
   
   def new
     unless logged_in?
@@ -25,5 +25,13 @@ class SessionsController < ApplicationController
     session.delete(:user_id)
     flash[:notice] = 'ログアウトしました'
     redirect_to new_session_path
+  end
+
+  private
+  
+  def already_logged_in?
+    if logged_in?
+      redirect_to tasks_path, notice: 'ログアウトしました'
+    end
   end
 end
