@@ -3,7 +3,30 @@
 <p>メールアドレス: <%= @user.email %></p>
 <p>権限: <%= @user.admin %></p>
 
-<%# 管理者限定でadmin/user/indexを表示させる %>
+  <h2>Taskユーザー一覧</h2>
+
+<table>
+  <tr>
+    <th>ユーザー名</th>
+    <th>タスク名</th>
+    <th>詳細</th>
+    <th>終了期限</th>
+    <th>ステータス</th>
+     <th>優先順位</th>
+  </tr>
+
+  <% @user.tasks.each do |task| %>
+  <tr>
+    <td><%= task.user.name %></td>
+    <td class="task_all"><%= task.title %></td>
+    <td><%= task.detail %></td>
+    <td><%= task.deadline_at %></td>
+    <td><%= task.status%></td>
+    <td><%= task.priority%></td>>
+  </tr>
+  <% end %>
+</table>
+
 <% if @user.admin? %>
   <%= link_to '管理:Taskユーザー一覧',admin_users_path%>
 <%  end %>
