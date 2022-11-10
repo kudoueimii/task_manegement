@@ -1,14 +1,12 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create, :edit, :update]
-  # before_action :not_login_user, only:[:destroy, :new, :create, :edit, :update]
-
   
   def new
-    # if current_user
-    #   redirect_to tasks_path
-    # else
+    if current_user
+      redirect_to tasks_path
+    else
     @user = User.new
-    # end
+    end
   end
  
   def create

@@ -16,13 +16,18 @@ ActiveRecord::Schema.define(version: 2022_11_08_201823) do
   enable_extension "plpgsql"
 
   create_table "labels", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "task_labels", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "label_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_task_labels_on_label_id"
+    t.index ["task_id"], name: "index_task_labels_on_task_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -47,5 +52,7 @@ ActiveRecord::Schema.define(version: 2022_11_08_201823) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "task_labels", "labels"
+  add_foreign_key "task_labels", "tasks"
   add_foreign_key "tasks", "users"
 end
