@@ -3,6 +3,8 @@
 <%= form_with(scope: :task, url: tasks_path, method: :get, local: true) do |form| %>
   <%= form.text_field :title %>
   <%= form.select :status, Task.statuses.keys.to_a, include_blank: "選択してください" %>
+  <%= form.label :'label'%>
+  <%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
   <%= form.submit 'Search', name: nil %>
 <% end %>
 
@@ -28,6 +30,9 @@
     <td><%= link_to 'show', task_path(task.id) %></td>
     <td><%= link_to '編集', edit_task_path(task.id) %></td>
     <td><%= link_to '削除', task_path(task.id), method: :delete %></td>
+    <td><% task.labels.each do |label| %>
+      <%= label.name %>
+    <% end %></td>
   </tr>
 <% end %>
 </div>
@@ -36,4 +41,6 @@
 <%= link_to '新規作成', new_task_path%>
 <%= link_to "終了期限でソートする", tasks_path(sort_deadline: "true") %>
 <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %>
+
+
 <%= paginate @tasks %>

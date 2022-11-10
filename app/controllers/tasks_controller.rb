@@ -10,15 +10,21 @@ class TasksController < ApplicationController
     if params[:sort_priority]
       @tasks = current_user.tasks.order(priority: :asc)
     end
+    # @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     if params[:task].present?
       title = params[:task][:title]
       status = params[:task][:status]
-      if params[:task].present? && params[:task][:status].present?
+      label = params[:task][:label_id]
+      if title.present? && status.present?
         @tasks = current_user.tasks.search_title(title).search_status(status)
-      elsif params[:task].present?
+      elsif title.present?
         @tasks = current_user.tasks.search_title(title)
-      elsif params[:status].present?
+      elsif status.present?
         @tasks = current_user.tasks.search_status(status)
+      elsif label.present?
+        @task = @tasks.joins(:labels).where(labels: { id: params[:label_id] })
+        task_id = TaskLabel.where(label_id: label).pluck(:task_id)
+        @tasks = Task.where(id: task_id)
       end
     end
     @tasks = @tasks.page(params[:page]).per(5)
@@ -60,7 +66,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority, :page, :admin)
+    params.require(:task).permit(:title, :detail, :deadline_at, :status, :priority, :page, :admin, {label_ids: []})
   end
 
   def check_user

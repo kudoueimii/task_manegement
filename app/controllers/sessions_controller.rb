@@ -3,11 +3,6 @@ class SessionsController < ApplicationController
   # prepend_before_action :already_logged_in?, only:[:new, :create]
   
   def new
-    unless logged_in?
-      user = User.new
-    else
-      redirect_to tasks_path, notice: 'すでにログインしています。'
-    end
   end
     
   def create

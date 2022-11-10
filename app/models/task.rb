@@ -3,6 +3,8 @@ class Task < ApplicationRecord
   validates :detail, presence: true
   
   belongs_to :user
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels, source: :label
   
   scope :deadline, -> {order(deadline_at: :desc)}
   scope :search_title, ->(title){where("title LIKE ?", "%#{title}%")}
