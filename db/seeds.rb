@@ -16,4 +16,6 @@ User.create!(
     Label.create!( name: "sample#{i+1}")
   end
 
-  
+  10.times do |i|
+    Task.create!( title: "sample_title#{i+1}", detail: "sample_content#{i+1}",    deadline_at: "2022-11-11",    status: "waiting",    priority: "高",    user_id: 3)
+  end
